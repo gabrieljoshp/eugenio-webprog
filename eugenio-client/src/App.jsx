@@ -1,23 +1,35 @@
-import React from "react";
-import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Welcome to my React App!</h1>
-        <p>
-          Name: Eugenio, Gabriel Josh
-          <br />
-          Email: eugeniogp@students.national-u.edu.ph
-          <br />
-          Other Personal Info:{" "}
-          <a href="https://github.com/gabrieljoshp">GitHub Profile</a>
-          <br />
-        </p>
-      </header>
-    </div>
-  );
-}
+import Layout from "./components/Layout";
+import ArticlePage from "./pages/ArticlePage";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+
+const routes = [
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "",
+        element: <HomePage />,
+      },
+      {
+        path: "about",
+        element: <AboutPage />,
+      },
+      {
+        path: "articles",
+        element: <ArticlePage />,
+      },
+    ],
+  },
+];
+
+const router = createBrowserRouter(routes);
+
+const App = () => {
+  return <RouterProvider router={router} />;
+};
 
 export default App;

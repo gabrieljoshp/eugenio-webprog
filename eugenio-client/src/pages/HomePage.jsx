@@ -30,7 +30,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="rounded-3xl border-2 border-solid border-zinc-300 bg-zinc-100 p-2">
+          <div className="rounded-3xl border-2 border-solid border-zinc-900 bg-zinc-100 p-2">
             <div className="overflow-hidden rounded-[1.25rem]">
               <img
                 src={NU_Project}

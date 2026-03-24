@@ -39,7 +39,7 @@ const ArticlePage = () => {
 
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <article className="rounded-3xl border-2 border-zinc-900 bg-zinc-100 p-4">
-            <div className="flex aspect-4/3 items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
+            <div className="flex aspect-1/1 items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
               <img
                 src={hana}
                 alt="Article 01"
@@ -64,7 +64,7 @@ const ArticlePage = () => {
           </article>
 
           <article className="rounded-3xl border-2 border-zinc-900 bg-zinc-100 p-4">
-            <div className="flex aspect-4/3 items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
+            <div className="flex aspect-1/1 items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
               <img
                 src={game_sched}
                 alt="Article 02"
@@ -89,7 +89,7 @@ const ArticlePage = () => {
           </article>
 
           <article className="rounded-3xl border-2 border-zinc-900 bg-zinc-100 p-4">
-            <div className="flex aspect-4/3 items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
+            <div className="flex aspect-1/1 items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
               <img
                 src={womens}
                 alt="Article 03"
@@ -114,7 +114,7 @@ const ArticlePage = () => {
           </article>
 
           <article className="rounded-3xl border-2 border-zinc-900 bg-zinc-100 p-4">
-            <div className="flex aspect-4/3 items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
+            <div className="flex aspect-1/1 items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
               <img
                 src={game_sched2}
                 alt="Article 04"

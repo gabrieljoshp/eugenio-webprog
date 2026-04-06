@@ -1,145 +1,81 @@
+import { useParams } from "react-router-dom";
 import Button from "../components/Button";
-import hana from "../assets/hana.jpg";
-import womens from "../assets/womens.jpg";
-import game_sched from "../assets/game_sched.jpg";
-import game_sched2 from "../assets/game_sched2.jpg";
+import articles from "../assets/article-content.js";
 
-const ArticlePage = () => {
+function ArticlePage() {
+  const { name } = useParams();
+  const article = articles.find((article) => article.name === name);
+
+  if (!article) {
+    return (
+      <div className="flex w-full flex-col gap-6">
+        <section className="border-y-2 border-zinc-900 bg-zinc-50 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+          <div className="mx-auto max-w-3xl">
+            <h1 className="text-3xl font-bold text-zinc-900">
+              Article not found
+            </h1>
+            <Button to="/articles" className="mt-6">
+              Back to Articles
+            </Button>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
   return (
     <div className="flex w-full flex-col gap-6">
       <section className="border-y-2 border-zinc-900 bg-zinc-50 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
-          Articles
-        </p>
+        <div className="max-w-3xl">
+          <div className="mb-4">
+            <Button to="/articles"> Back to Articles</Button>
+          </div>
 
-        <h1 className="max-w-xl text-3xl font-bold leading-tight text-zinc-900 sm:text-4xl">
-          Featured articles in a simple card grid
-        </h1>
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
+            Article
+          </p>
 
-        <p className="mt-4 max-w-lg text-sm leading-7 text-zinc-600 sm:text-base">
-          A clean wireframe section for article thumbnails, titles, short
-          descriptions, and one clear action per card.
-        </p>
+          <h1 className="text-3xl font-bold leading-tight text-zinc-900 sm:text-4xl">
+            {article.title}
+          </h1>
 
-        <div className="mt-6">
-          <Button to="/">Back Home</Button>
+          <p className="mt-2 text-sm text-zinc-500">
+            {article.name
+              .split("-")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ")}
+          </p>
         </div>
       </section>
 
       <section className="border-y-2 border-zinc-900 bg-zinc-50 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-        <div className="mb-6">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
-            Featured Articles
-          </p>
+        <div className="mx-auto max-w-3xl">
+          <div className="flex aspect-[1/1] items-center justify-center rounded-[1.25rem] border-2 border-zinc-900 bg-zinc-200 mb-8 overflow-hidden">
+            <img
+              src={article.image}
+              alt={article.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
 
-          <h2 className="mt-2 text-2xl font-semibold text-zinc-900">
-            Article card grid
-          </h2>
-        </div>
+          <div className="prose prose-sm max-w-none space-y-4 text-zinc-700">
+            {article.content.map((paragraph, index) => (
+              <p
+                key={index}
+                className="text-base leading-7 text-zinc-700 whitespace-pre-wrap"
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          <article className="rounded-3xl border-2 border-zinc-900 bg-zinc-100 p-4">
-            <div className="flex aspect-1/1 items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
-              <img
-                src={hana}
-                alt="Article 01"
-                className="w-fit h-fit object-cover"
-              />
-            </div>
-
-            <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-zinc-500">
-              Article 01
-            </p>
-
-            <h3 className="mt-2 text-lg font-semibold text-zinc-900">
-              Wireframe layout basics
-            </h3>
-
-            <p className="mt-3 text-sm leading-6 text-zinc-600">
-              A simple placeholder for a featured article with image, title, and
-              short copy.
-            </p>
-
-            <Button className="mt-4">Read More</Button>
-          </article>
-
-          <article className="rounded-3xl border-2 border-zinc-900 bg-zinc-100 p-4">
-            <div className="flex aspect-1/1 items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
-              <img
-                src={game_sched}
-                alt="Article 02"
-                className="w-fit h-fit object-cover"
-              />
-            </div>
-
-            <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-zinc-500">
-              Article 02
-            </p>
-
-            <h3 className="mt-2 text-lg font-semibold text-zinc-900">
-              Building clean sections
-            </h3>
-
-            <p className="mt-3 text-sm leading-6 text-zinc-600">
-              Another card using the same layout pattern for a consistent
-              article grid.
-            </p>
-
-            <Button className="mt-4">Read More</Button>
-          </article>
-
-          <article className="rounded-3xl border-2 border-zinc-900 bg-zinc-100 p-4">
-            <div className="flex aspect-1/1 items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
-              <img
-                src={womens}
-                alt="Article 03"
-                className="w-fit h-fit object-cover"
-              />
-            </div>
-
-            <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-zinc-500">
-              Article 03
-            </p>
-
-            <h3 className="mt-2 text-lg font-semibold text-zinc-900">
-              Using cards and lists
-            </h3>
-
-            <p className="mt-3 text-sm leading-6 text-zinc-600">
-              The same low-fidelity treatment keeps the card section easy to
-              scan.
-            </p>
-
-            <Button className="mt-4">Read More</Button>
-          </article>
-
-          <article className="rounded-3xl border-2 border-zinc-900 bg-zinc-100 p-4">
-            <div className="flex aspect-1/1 items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
-              <img
-                src={game_sched2}
-                alt="Article 04"
-                className="w-fit h-fit object-cover"
-              />
-            </div>
-
-            <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-zinc-500">
-              Article 04
-            </p>
-
-            <h3 className="mt-2 text-lg font-semibold text-zinc-900">
-              Low-fidelity article flow
-            </h3>
-
-            <p className="mt-3 text-sm leading-6 text-zinc-600">
-              A final article card to complete the featured grid layout.
-            </p>
-
-            <Button className="mt-4">Read More</Button>
-          </article>
+          <div className="mt-8 border-t-2 border-zinc-900 pt-6">
+            <Button to="/articles">Back to Articles</Button>
+          </div>
         </div>
       </section>
     </div>
   );
-};
+}
 
 export default ArticlePage;

@@ -1,8 +1,8 @@
-import Button from "../components/Button";
-import NU_Project from "../assets/NU_Project.jpg";
-import NU_Picture1 from "../assets/NU_Picture1.jpg";
-import NU_Picture2 from "../assets/NU_Picture2.jpg";
-import NU_Picture3 from "../assets/NU_Picture3.jpg";
+import Button from "../../components/Button";
+import NU_Project from "../../assets/NU_Project.jpg";
+import NU_Picture1 from "../../assets/NU_Picture1.jpg";
+import NU_Picture2 from "../../assets/NU_Picture2.jpg";
+import NU_Picture3 from "../../assets/NU_Picture3.jpg";
 
 const HomePage = () => {
   return (

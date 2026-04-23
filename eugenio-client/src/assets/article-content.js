@@ -31,7 +31,7 @@ const articles = [
   },
   {
     name: "Don Mariano Fortunato Jhocson",
-    title: "Remembering the Founder",
+    title: "Remembering the Founder; A Legacy of Leadership and Service",
     image: jhocsonImage,
     content: [
       "A visionary leader and steadfast advocate for education, Don Mariano Fortunato Jhocson dedicated his life to empowering students and shaping the future of the nation.\n\nHis enduring legacy continues to inspire every Nationalian to learn with purpose, lead with integrity, and serve with heart.",

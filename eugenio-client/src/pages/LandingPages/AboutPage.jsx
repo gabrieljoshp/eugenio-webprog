@@ -1,4 +1,4 @@
-import Button from "../../components/Button.jsx"
+import Button from "../../components/Button.jsx";
 import jhocson2 from "../../assets/jhocson2.jpg";
 import lab_room from "../../assets/lab_room.jpg";
 import lecture_room from "../../assets/lecture_room.jpg";
@@ -10,11 +10,11 @@ const AboutPage = () => {
     <div className="flex w-full flex-col gap-6">
       <section className="border-y-2 border-zinc-900 bg-zinc-50 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
-          <div className="rounded-3xl overflow-hidden bg-zinc-100 p-1">
+          <div className="rounded-3xl shadow-xl overflow-hidden bg-zinc-100">
             <img
               src={jhocson2}
               alt="Preview"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
           </div>
 
@@ -134,7 +134,7 @@ const AboutPage = () => {
             </p>
 
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
-              <div className="flex aspect-square items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
+              <div className="flex aspect-square items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200 shadow-xl">
                 <img
                   src={lab_room}
                   alt="Preview"
@@ -142,7 +142,7 @@ const AboutPage = () => {
                 />
               </div>
 
-              <div className="flex aspect-square items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
+              <div className="flex aspect-square items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200 shadow-xl">
                 <img
                   src={lecture_room}
                   alt="Preview"
@@ -150,7 +150,7 @@ const AboutPage = () => {
                 />
               </div>
 
-              <div className="flex aspect-square items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
+              <div className="flex aspect-square items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200 shadow-xl">
                 <img
                   src={audiovisual_room}
                   alt="Preview"
@@ -158,7 +158,7 @@ const AboutPage = () => {
                 />
               </div>
 
-              <div className="flex aspect-square items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200">
+              <div className="flex aspect-square items-center overflow-hidden justify-center rounded-[1.25rem] bg-zinc-200 shadow-xl">
                 <img
                   src={hybrid_equipment}
                   alt="Preview"

@@ -50,7 +50,7 @@ function ArticlePage() {
 
       <section className="border-y-2 border-zinc-900 bg-zinc-50 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <div className="flex aspect-[1/1] items-center justify-center rounded-[1.25rem] border-2 border-zinc-900 bg-zinc-200 mb-8 overflow-hidden">
+          <div className="flex aspect-square items-center justify-center rounded-[1.25rem] border-2 border-zinc-900 bg-zinc-200 mb-8 overflow-hidden shadow-xl">
             <img
               src={article.image}
               alt={article.title}
@@ -58,11 +58,11 @@ function ArticlePage() {
             />
           </div>
 
-          <div className="prose prose-sm max-w-none space-y-4 text-zinc-700">
+          <div className="text-justify prose prose-sm max-w-none space-y-4 text-zinc-700">
             {article.content.map((paragraph, index) => (
               <p
                 key={index}
-                className="text-base leading-7 text-zinc-700 whitespace-pre-wrap"
+                className="text-justify leading-7 text-zinc-700 whitespace-pre-wrap"
               >
                 {paragraph}
               </p>

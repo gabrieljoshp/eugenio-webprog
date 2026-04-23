@@ -20,11 +20,12 @@ function NotFoundPage() {
               </h1>
 
               <p className="mt-4 text-lg leading-7 text-zinc-600 sm:text-xl">
-                The page you are looking for does not exist.
+                Page not found. The page you're looking for doesn't exist or has
+                been moved.
               </p>
 
               <div className="mt-8 flex justify-center gap-4">
-                <Button to="/" variant="primary">
+                <Button to="/" variant="secondary">
                   Return To Home
                 </Button>
               </div>

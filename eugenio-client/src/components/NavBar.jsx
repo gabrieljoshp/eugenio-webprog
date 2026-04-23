@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
-import logo from "../assets/NUCCITLogo_White.png";
+import logo from "../assets/NU_Shield_1.png";
 
 const links = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
   { label: "Articles", to: "/articles" },
-  { label: "Sign In", to: "/auth/signin"}
+  { label: "Sign In", to: "/auth/signin" },
 ];
 
 const navLinkClassName = ({ isActive }) =>
@@ -22,7 +22,7 @@ const NavBar = () => {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <NavLink to="/" className="flex items-center gap-3">
           <div className="space-y-0.5">
-            <img src={logo} alt="LOGO" className="h-12 w-auto" />
+            <img src={logo} alt="LOGO" className="h-14 w-auto" />
           </div>
         </NavLink>
 

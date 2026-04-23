@@ -72,6 +72,8 @@ const SignInPage = () => {
         </div>
 
         <Button
+          Link
+          to="/dashboard"
           type="submit"
           variant="primary"
           className={actionButtonClassName}

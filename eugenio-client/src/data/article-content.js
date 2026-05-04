@@ -1,7 +1,7 @@
-import hanaImage from "./hana.jpg";
-import osiasImage from "./osias.jpg";
-import womensImage from "./womens.jpg";
-import jhocsonImage from "./jhocson.jpg";
+import hanaImage from "../assets/hana.jpg";
+import osiasImage from "../assets/osias.jpg";
+import womensImage from "../assets/womens.jpg";
+import jhocsonImage from "../assets/jhocson.jpg";
 
 const articles = [
   {

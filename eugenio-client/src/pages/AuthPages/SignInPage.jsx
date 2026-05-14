@@ -1,5 +1,7 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
+import { loginUser } from "../../services/UserService";
 
 const inputClasses =
   "mt-2 w-full rounded-xl border border-zinc-300 bg-zinc-100 px-4 py-3 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-zinc-900 focus:bg-zinc-50";
@@ -8,6 +10,37 @@ const actionButtonClassName =
   "w-full rounded-xl py-3 text-[11px] tracking-[0.2em]";
 
 const SignInPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const { data } = await loginUser({ email, password });
+      console.log("Login successful:", data);
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("firstName", data.user.firstName);
+      localStorage.setItem("role", data.user.role);
+
+      navigate("/dashboard", {
+        state: { firstName: data.user.firstName, role: data.user.role },
+      });
+    } catch (err) {
+      console.error(
+        "Login failed:",
+        err.response?.data?.message || err.message,
+      );
+      setError(
+        err.response?.data?.message || "Login failed. Please try again.",
+      );
+    }
+  };
+
   return (
     <>
       <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
@@ -18,7 +51,13 @@ const SignInPage = () => {
         across the site.
       </p>
 
-      <form className="mt-8 space-y-5">
+      {error && (
+        <p className="mt-4 rounded-lg bg-red-50 p-3 text-sm text-red-700 border border-red-200">
+          {error}
+        </p>
+      )}
+
+      <form onSubmit={handleLogin} className="mt-8 space-y-5">
         <div>
           <label
             htmlFor="signin-email"
@@ -31,6 +70,9 @@ const SignInPage = () => {
             type="email"
             placeholder="juan.delacruz@students.national-u.edu.ph"
             autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
             className={inputClasses}
           />
         </div>
@@ -47,6 +89,9 @@ const SignInPage = () => {
             type="password"
             placeholder="••••••••"
             autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
             className={inputClasses}
           />
           <p className="mt-2 text-xs leading-5 text-zinc-500">
@@ -72,8 +117,6 @@ const SignInPage = () => {
         </div>
 
         <Button
-          Link
-          to="/dashboard"
           type="submit"
           variant="primary"
           className={actionButtonClassName}

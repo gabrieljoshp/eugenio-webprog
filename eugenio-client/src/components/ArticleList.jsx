@@ -12,7 +12,12 @@ const ArticleList = ({ articles }) => {
           <div className="flex aspect-1/1 items-center justify-center rounded-[1.25rem] bg-zinc-200 overflow-hidden">
             {article.image ? (
               <img
-                src={article.image}
+                src={
+                  article.image?.startsWith("http") ||
+                  article.image?.startsWith("/")
+                    ? article.image
+                    : `/${article.image}`
+                }
                 alt={article.title}
                 className="w-full h-full object-cover"
               />
@@ -27,7 +32,11 @@ const ArticleList = ({ articles }) => {
             {article.title}
           </h3>
           <p className="mt-3 text-sm leading-6 text-zinc-600">
-            {article.content[0].substring(0, 150)} ...
+            {(Array.isArray(article.content)
+              ? article.content[0]
+              : article.content || ""
+            ).substring(0, 150)}{" "}
+            ...
           </p>
           <Link to={`/articles/${article.name}`}>
             <Button className="mt-4">Read More</Button>

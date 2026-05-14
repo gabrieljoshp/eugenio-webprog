@@ -1,10 +1,31 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../../components/Button.jsx";
-import articles from "../../data/article-content.js";
+import { fetchArticles } from "../../services/ArticleService";
 
 function ArticlePage() {
   const { name } = useParams();
-  const article = articles.find((article) => article.name === name);
+  const [article, setArticle] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadArticle = async () => {
+      try {
+        const { data } = await fetchArticles();
+        const list = Array.isArray(data) ? data : data.articles || [];
+        const found = list.find((a) => a.name === name);
+        setArticle(found);
+      } catch (err) {
+        console.error("Error loading article:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadArticle();
+  }, [name]);
+
+  if (loading)
+    return <div className="p-20 text-center">Loading article content...</div>;
 
   if (!article) {
     return (
@@ -52,14 +73,22 @@ function ArticlePage() {
         <div className="mx-auto max-w-3xl">
           <div className="flex aspect-square items-center justify-center rounded-[1.25rem] border-2 border-zinc-900 bg-zinc-200 mb-8 overflow-hidden shadow-xl">
             <img
-              src={article.image}
+              src={
+                article.image?.startsWith("http") ||
+                article.image?.startsWith("/")
+                  ? article.image
+                  : `/${article.image}`
+              }
               alt={article.title}
               className="w-full h-full object-cover"
             />
           </div>
 
           <div className="text-justify prose prose-sm max-w-none space-y-4 text-zinc-700">
-            {article.content.map((paragraph, index) => (
+            {(Array.isArray(article.content)
+              ? article.content
+              : [article.content]
+            ).map((paragraph, index) => (
               <p
                 key={index}
                 className="text-justify leading-7 text-zinc-700 whitespace-pre-wrap"

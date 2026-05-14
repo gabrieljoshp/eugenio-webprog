@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Alert,
   Box,
@@ -23,7 +23,7 @@ import { useTheme } from "@mui/material/styles";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { DataGrid } from "@mui/x-data-grid";
-import usersSeed from "../../data/users.json?raw";
+import { fetchUsers, createUser, updateUser } from "../../services/UserService";
 
 const roles = ["admin", "editor", "viewer"];
 const genders = ["male", "female", "other"];
@@ -45,59 +45,13 @@ const blankForm = {
 const labelize = (value) =>
   value ? `${value.charAt(0).toUpperCase()}${value.slice(1)}` : "";
 
-const loadUsers = () => {
-  try {
-    return {
-      users: JSON.parse(usersSeed).map((user, index) => ({
-        id: Number(user.id) || index + 1,
-        firstName: String(user.firstName ?? "").trim(),
-        lastName: String(user.lastName ?? "").trim(),
-        age: String(user.age ?? "").trim(),
-        gender: genders.includes(
-          String(user.gender ?? "")
-            .trim()
-            .toLowerCase(),
-        )
-          ? String(user.gender ?? "")
-              .trim()
-              .toLowerCase()
-          : "other",
-        contactNumber: String(user.contactNumber ?? "").trim(),
-        email: String(user.email ?? "")
-          .trim()
-          .toLowerCase(),
-        role: roles.includes(
-          String(user.role ?? "")
-            .trim()
-            .toLowerCase(),
-        )
-          ? String(user.role ?? "")
-              .trim()
-              .toLowerCase()
-          : "editor",
-        username: String(user.username ?? "")
-          .trim()
-          .toLowerCase(),
-        password: String(user.password ?? ""),
-        address: String(user.address ?? "").trim(),
-        isActive: typeof user.isActive === "boolean" ? user.isActive : true,
-      })),
-      error: null,
-    };
-  } catch {
-    return {
-      users: [],
-      error: "Unable to read users from src/assets/users.json.",
-    };
-  }
-};
-
-const seed = loadUsers();
-
 const UsersPage = () => {
   const theme = useTheme();
+  const userRole = localStorage.getItem("role");
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [users, setUsers] = useState(seed.users);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [modal, setModal] = useState({ open: false, id: null });
   const [form, setForm] = useState(blankForm);
   const [errors, setErrors] = useState({});
@@ -106,6 +60,57 @@ const UsersPage = () => {
   const [roleFilter, setRoleFilter] = useState("");
   const [genderFilter, setGenderFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+
+  // Enhancement 1: Editors cannot access UsersPage
+  if (userRole !== "admin") {
+    return (
+      <Box sx={{ p: 3 }}>
+        <Alert severity="error">
+          <Typography variant="h6">Access Denied</Typography>
+          You do not have the necessary permissions to view the User Management
+          page. Please contact your administrator.
+        </Alert>
+      </Box>
+    );
+  }
+
+  // Load users from API on mount
+  useEffect(() => {
+    loadUsersFromAPI();
+  }, []);
+
+  const loadUsersFromAPI = async () => {
+    try {
+      setLoading(true);
+      const { data } = await fetchUsers();
+      const usersList = Array.isArray(data) ? data : data.users || [];
+
+      // Map API response to component structure
+      const mappedUsers = usersList.map((user) => ({
+        id: user._id || user.id,
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        age: String(user.age || ""),
+        gender: genders.includes((user.gender || "").toLowerCase())
+          ? (user.gender || "").toLowerCase()
+          : "other",
+        contactNumber: user.contactNumber || "",
+        email: user.email || "",
+        role: user.role || user.type || "editor",
+        username: user.username || "",
+        address: user.address || "",
+        isActive: user.isActive !== false,
+      }));
+
+      setUsers(mappedUsers);
+      setError(null);
+    } catch (err) {
+      console.error("Error loading users:", err);
+      setError("Failed to load users. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Filter users based on search and filters
   const filteredUsers = users.filter((user) => {
@@ -166,12 +171,16 @@ const UsersPage = () => {
       ["email", "Email"],
       ["role", "Role"],
       ["username", "Username"],
-      ["password", "Password"],
     ].forEach(([key, label]) => {
       if (!String(form[key]).trim()) {
         nextErrors[key] = `${label} is required.`;
       }
     });
+
+    // Password is only required when creating new user
+    if (!modal.id && !form.password) {
+      nextErrors.password = "Password is required.";
+    }
 
     // Age must be numeric only
     if (!nextErrors.age && form.age && !/^\d+$/.test(form.age.trim())) {
@@ -187,7 +196,7 @@ const UsersPage = () => {
       nextErrors.contactNumber = "Contact number must be 11 digits.";
     }
 
-    // Password must be at least 8 characters
+    // Password must be at least 8 characters when provided
     if (!nextErrors.password && form.password && form.password.length < 8) {
       nextErrors.password = "Password must be at least 8 characters.";
     }
@@ -222,7 +231,7 @@ const UsersPage = () => {
     return nextErrors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const nextErrors = validate();
     if (Object.keys(nextErrors).length) {
@@ -230,7 +239,7 @@ const UsersPage = () => {
       return;
     }
 
-    const nextUser = {
+    const submitData = {
       firstName: form.firstName.trim(),
       lastName: form.lastName.trim(),
       age: form.age.trim(),
@@ -239,37 +248,44 @@ const UsersPage = () => {
       email: form.email.trim().toLowerCase(),
       role: form.role.trim().toLowerCase(),
       username: form.username.trim().toLowerCase(),
-      password: form.password,
       address: form.address.trim(),
       isActive: form.isActive,
     };
 
-    setUsers((prev) =>
-      modal.id
-        ? prev.map((user) =>
-            user.id === modal.id ? { ...user, ...nextUser } : user,
-          )
-        : [
-            ...prev,
-            {
-              ...nextUser,
-              id:
-                prev.reduce(
-                  (max, user) => Math.max(max, Number(user.id) || 0),
-                  0,
-                ) + 1,
-            },
-          ],
-    );
-    closeModal();
+    // Only include password if provided
+    if (form.password) {
+      submitData.password = form.password;
+    }
+
+    try {
+      if (modal.id) {
+        await updateUser(modal.id, submitData);
+      } else {
+        if (!submitData.password) {
+          setErrors({ password: "Password is required." });
+          return;
+        }
+        await createUser(submitData);
+      }
+      await loadUsersFromAPI();
+      closeModal();
+    } catch (err) {
+      console.error("Error saving user:", err);
+      setError(err.response?.data?.message || "Failed to save user.");
+    }
   };
 
-  const toggleStatus = (id) => {
-    setUsers((prev) =>
-      prev.map((user) =>
-        user.id === id ? { ...user, isActive: !user.isActive } : user,
-      ),
-    );
+  const toggleStatus = async (id) => {
+    try {
+      const userToUpdate = users.find((u) => u.id === id);
+      if (userToUpdate) {
+        await updateUser(id, { isActive: !userToUpdate.isActive });
+        await loadUsersFromAPI();
+      }
+    } catch (err) {
+      console.error("Error toggling user status:", err);
+      setError("Failed to update user status.");
+    }
   };
 
   const fieldProps = (name, label, extra = {}) => ({
@@ -428,14 +444,16 @@ const UsersPage = () => {
         </Stack>
       </Paper>
 
-      {seed.error && (
+      {error && (
         <Alert severity="error" sx={{ mb: 2 }}>
-          {seed.error}
+          {error}
         </Alert>
       )}
 
       <Paper sx={{ p: { xs: 1.5, sm: 2 }, minWidth: 0, overflow: "hidden" }}>
-        {filteredUsers.length ? (
+        {loading ? (
+          <Alert severity="info">Loading users...</Alert>
+        ) : filteredUsers.length ? (
           <Box sx={{ height: { xs: 460, sm: 520 }, width: "100%" }}>
             <DataGrid
               rows={filteredUsers}
@@ -512,6 +530,10 @@ const UsersPage = () => {
               <TextField
                 {...fieldProps("password", "Password", {
                   type: showPassword ? "text" : "password",
+                  helperText: modal.id
+                    ? "Leave blank to keep current password"
+                    : errors.password ||
+                      "Password must be at least 8 characters",
                   slotProps: {
                     input: {
                       endAdornment: (

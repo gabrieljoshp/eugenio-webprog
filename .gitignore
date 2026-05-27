@@ -7,10 +7,19 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+# Node modules
+eugenio-client/node_modules/
+eugenio-server/node_modules/
+
 dist
 dist-ssr
 *.local
+
+# Environment variables
+eugenio-client/.env
+eugenio-client/.env.local
+eugenio-server/.env
+eugenio-server/.env.local
 
 # Editor directories and files
 .vscode/*
@@ -22,7 +31,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# Environment variables
-eugenio-client/.env
-eugenio-client/.env.local

@@ -112,7 +112,9 @@ const HomePage = () => {
             </h3>
 
             <p className="mt-3 text-sm leading-6 text-zinc-600">
-              A clean placeholder for title, short text, and action.
+              Inaugurated in 2008 following the SM Group's acquisition of
+              National University, the Main Building is a modern architectural
+              marvel that serves as the heart of the campus,
             </p>
 
             <Button className="mt-4" variant="primary">
@@ -134,7 +136,9 @@ const HomePage = () => {
             </h3>
 
             <p className="mt-3 text-sm leading-6 text-zinc-600">
-              Balanced spacing keeps the card layout easy to scan.
+              A survivor of the 1998 fire that razed the old Main Building, the
+              Jhocson Memorial Building stands as a testament to resilience and
+              history.
             </p>
 
             <Button className="mt-4" variant="primary">
@@ -156,7 +160,9 @@ const HomePage = () => {
             </h3>
 
             <p className="mt-3 text-sm leading-6 text-zinc-600">
-              Repeated blocks give the page a consistent wireframe rhythm.
+              A striking tribute to the legacy of Jhocson, the statue stands as
+              a symbol of the university's commitment to excellence and
+              innovation.
             </p>
 
             <Button className="mt-4" variant="primary">

@@ -7,7 +7,7 @@ import NU_Picture3 from "../../assets/NU_Picture3.jpg";
 const HomePage = () => {
   return (
     <div className="flex w-full flex-col gap-6">
-      <section className=" bg-zinc-50 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+      <section className="px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.28em] text-zinc-900">
@@ -52,7 +52,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className="border-y-2 border-zinc-900 bg-zinc-50 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+      <section className="border-y-2 border-zinc-900 bg-zinc-50 px-4 py-2 sm:px-6 sm:py-8 lg:px-8">
         <div className="mb-6">
           <h2 className="mt-2 text-2xl font-semibold text-zinc-900">
             Quick overview blocks
@@ -90,9 +90,9 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className=" bg-zinc-50 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+      <section className="px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <div className="mb-6">
-          <h2 className="mt-2 text-2xl font-semibold text-zinc-900">
+          <h2 className="text-2xl font-semibold text-zinc-900">
             Our Campus, in a glance
           </h2>
         </div>

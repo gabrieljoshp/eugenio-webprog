@@ -2,7 +2,7 @@ import Button from "../../components/Button.jsx";
 import jhocson2 from "../../assets/jhocson2.jpg";
 import lab_room from "../../assets/lab_room.jpg";
 import lecture_room from "../../assets/lecture_room.jpg";
-import audiovisual_room from "../../assets/audiovisual_room.jpg";
+import audiovisual_room from "../../assets/audiovisual_Room.jpg";
 import hybrid_equipment from "../../assets/hybrid_equipment.jpg";
 
 const AboutPage = () => {

@@ -21,6 +21,10 @@ eugenio-client/.env.local
 eugenio-server/.env
 eugenio-server/.env.local
 
+# Vercel
+.vercel/
+.vercel
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

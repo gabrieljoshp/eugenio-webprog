@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment variables
+eugenio-client/.env
+eugenio-client/.env.local
+
+eugenio-server/.env
+eugenio-server/.env.local

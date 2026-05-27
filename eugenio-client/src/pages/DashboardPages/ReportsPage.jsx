@@ -15,14 +15,21 @@ import {
 import NUShield from "../../assets/NU_Shield.png";
 
 const enrollmentPeriods = [
-  "Fall '22",
-  "Spring '23",
-  "Fall '23",
-  "Spring '24",
-  "Fall '24",
-  "Spring '25",
+  "July '22",
+  "October '22",
+  "February '23",
+  "July '23",
+  "October '23",
+  "February '24",
+  "July '24",
+  "October '24",
+  "February '25",
+  "July '25",
+  "October '25",
+  "February '26",
 ];
-const enrollmentCounts = [10, 25, 40, 55, 70, 85];
+
+const enrollmentCounts = [35, 45, 55, 65, 70, 75, 80, 90, 100, 110, 125, 150];
 
 const departmentData = [
   { id: 0, value: 34, label: "Engineering" },

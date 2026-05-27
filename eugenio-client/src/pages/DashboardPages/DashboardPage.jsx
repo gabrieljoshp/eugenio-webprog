@@ -284,11 +284,11 @@ function DashboardPage() {
         Campus Location
       </Typography>
 
-      <Box sx={{ height: 500, width: "100%" }}>
+      <Box sx={{ height: 500, width: "100%", borderRadius: 5, overflow: 'hidden'}}>
         <MapContainer
           center={[14.604253, 120.994314]}
-          zoom={13}
-          style={{ height: "100%", width: "100%" }}
+          zoom={20}
+          style={{ height: "100%", width: "100%"}}
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const variantClasses = {
   primary: "bg-blue-900 text-blue-50 hover:bg-blue-950",
-  secondary: "bg-yellow-400 text-yellow-900 hover:bg-yellow-600",
+  secondary: "bg-yellow-400 text-black hover:bg-yellow-600",
 };
 
 const Button = ({

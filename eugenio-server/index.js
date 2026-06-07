@@ -2,49 +2,32 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const bodyParser = require("body-parser");
-const jsonParser = bodyParser.json();
 const connectDB = require("./config/db.js");
 const userRoutes = require("./routes/userRoutes");
 const articleRoutes = require("./routes/articleRoutes");
 
 const app = express();
+const PORT = process.env.PORT || 8000;
 
 // Database Connection
 connectDB();
 
-app.use(express.json());
-
-//Middleware
-app.use(jsonParser);
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-
-// Serve static files from the "assets" directory
-app.use("/assets", express.static(path.join(__dirname, "assets")));
-
-// vercel options
+// CORS Configuration
 const corsOptions = {
   origin: "*", // Allow all origins
   credentials: true, // Allow credentials
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
-  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
-  preflightContinue: false,
-  optionsSuccessStatus: 204, // For legacy browser support
+  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
 };
-app.options("", cors(corsOptions)); // Pre-flight request for all routes
+
 app.use(cors(corsOptions));
 
-// Curb Cores Error by adding a header here
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization",
-  );
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE,");
-  next();
-});
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from the "assets" directory
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 // Routes
 app.use("/api/users", userRoutes);
